@@ -1,0 +1,22 @@
+<script> 
+
+
+function initializeNS(ns, obj) {
+  var global = (function () { return this;})(), // reference to the global object
+      levels = ns.split('.'), first = levels.shift();
+  obj = obj || global; //if no object argument supplied declare a global property
+  obj[first] = obj[first] || {}; // initialize the "level"
+  if (levels.length) { // recursion condition
+    initializeNS(levels.join('.'), obj[first]);
+  }
+  return obj[first]; // return a reference to the top level object
+
+}
+
+
+var topLevel = {};
+initializeNS('Foo.Bar.Baz', topLevel);
+
+
+console.dir(topLevel);
+</script> 
